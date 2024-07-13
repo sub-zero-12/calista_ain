@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "311245500288",
+    "project_id": "calista-ain-project",
+    "storage_bucket": "calista-ain-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311245500288:android:7129827ba31c0cff2a9b65",
+        "android_client_info": {
+          "package_name": "com.example.calista_ain"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbD8evanVVLoBrW9ydiNWS_Uk5KTXhWik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
