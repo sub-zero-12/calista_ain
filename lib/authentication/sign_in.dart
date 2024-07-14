@@ -1,7 +1,6 @@
 import 'package:calista_ain/authentication/reset_password.dart';
 import 'package:calista_ain/authentication/sign_up.dart';
 import 'package:calista_ain/services/auth_service.dart';
-import 'package:calista_ain/user/admin/admin_home.dart';
 import 'package:calista_ain/widgets/elevatedButton.dart';
 import 'package:calista_ain/widgets/outlineButton.dart';
 import 'package:calista_ain/widgets/textButton.dart';
@@ -23,15 +22,8 @@ class _SignInPageState extends State<SignInPage> {
   bool visibility = true;
 
   Future<void> login() async {
-    String adminEmail = "calistaain@gmail.com";
-    String adminPassword = "admin";
-    if (email.text.trim().toLowerCase() == adminEmail &&
-        password.text.trim().toLowerCase() == adminPassword) {
-      Get.offAll(() => const AdminHomePage());
-    } else {
-      AuthServices authService = AuthServices();
-      await authService.login(email.text.trim(), password.text.trim());
-    }
+    AuthServices authService = AuthServices();
+    await authService.login(email.text.trim(), password.text.trim());
   }
 
   @override

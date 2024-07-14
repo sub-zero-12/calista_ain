@@ -29,8 +29,8 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
         backgroundColor: Colors.pinkAccent.shade100,
       ),
       endDrawer: const Drawer(
-        child: Profile(),
 
+        child: Profile(),
       ),
       bottomNavigationBar: SalomonBottomBar(
         backgroundColor: Colors.pinkAccent.shade100,

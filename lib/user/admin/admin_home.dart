@@ -1,4 +1,7 @@
+import 'package:calista_ain/authentication/sign_in.dart';
+import 'package:calista_ain/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -25,6 +28,15 @@ class _AdminHomePageState extends State<AdminHomePage> {
           fontSize: 22,
           fontWeight: FontWeight.bold,
         ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await AuthServices().logout();
+              Get.offAll(() => const SignInPage());
+            },
+            icon: const Icon(Icons.logout, color: Colors.white,),
+          ),
+        ],
         backgroundColor: Colors.pinkAccent.shade100,
       ),
       bottomNavigationBar: SalomonBottomBar(

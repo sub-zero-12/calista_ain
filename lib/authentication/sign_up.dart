@@ -37,7 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
       "email": email.text.trim(),
       "number": number.text.trim(),
     };
-    await databaseService.addUser(userData);
+    await databaseService.addUserData(userData);
   }
 
   @override
