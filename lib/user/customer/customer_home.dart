@@ -1,4 +1,8 @@
+import 'package:calista_ain/user/customer/cart.dart';
+import 'package:calista_ain/user/customer/my_orders.dart';
+import 'package:calista_ain/user/customer/products.dart';
 import 'package:calista_ain/user/customer/profile.dart';
+import 'package:calista_ain/user/customer/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -14,6 +18,7 @@ class CustomerHomePage extends StatefulWidget {
 
 class _CustomerHomePageState extends State<CustomerHomePage> {
   int _currentIndex = 0;
+  final _pages = const [Products(), Cart(), Wishlist(), MyOrders()];
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +37,7 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
 
         child: Profile(),
       ),
+      body: _pages[_currentIndex],
       bottomNavigationBar: SalomonBottomBar(
         backgroundColor: Colors.pinkAccent.shade100,
         currentIndex: _currentIndex,

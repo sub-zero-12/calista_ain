@@ -3,6 +3,7 @@ import 'package:calista_ain/services/auth_service.dart';
 import 'package:calista_ain/services/db_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -51,7 +52,10 @@ class _ProfileState extends State<Profile> {
             const Spacer(),
             const Text("Contact Us"),
             OutlinedButton.icon(
-              onPressed: () {},
+              onPressed: () async {
+                Uri whatsapp = Uri.parse("https://wa.me/+8801773639437?text= ");
+                await canLaunchUrl(whatsapp) ? launchUrl(whatsapp) : throw 'exception';
+              },
               style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 40)),
               icon: Image.asset(
                 'images/whatsapp.png',
@@ -68,7 +72,10 @@ class _ProfileState extends State<Profile> {
             ),
             const Text("Follow Us"),
             OutlinedButton.icon(
-              onPressed: () {},
+              onPressed: () async {
+                Uri url = Uri.parse("https://www.facebook.com/calistaain");
+                await canLaunchUrl(url) ? launchUrl(url) : throw 'exception';
+              },
               style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 40)),
               icon: Image.asset(
                 'images/facebook.png',
@@ -78,7 +85,10 @@ class _ProfileState extends State<Profile> {
               label: const Text('Facebook'),
             ),
             OutlinedButton.icon(
-              onPressed: () {},
+              onPressed: () async {
+                Uri url = Uri.parse("https://www.instagram.com/calista.ain");
+                await canLaunchUrl(url) ? launchUrl(url) : throw 'exception';
+              },
               style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 40)),
               icon: Image.asset(
                 'images/instagram.png',

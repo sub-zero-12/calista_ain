@@ -1,5 +1,8 @@
 import 'package:calista_ain/authentication/sign_in.dart';
 import 'package:calista_ain/services/auth_service.dart';
+import 'package:calista_ain/user/admin/add_product.dart';
+import 'package:calista_ain/user/admin/all_orders.dart';
+import 'package:calista_ain/user/admin/all_products.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +19,7 @@ class AdminHomePage extends StatefulWidget {
 
 class _AdminHomePageState extends State<AdminHomePage> {
   int _currentIndex = 0;
+  final _pages = const [AllProducts(), AddProduct(), AllOrders()];
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +43,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
         ],
         backgroundColor: Colors.pinkAccent.shade100,
       ),
+      body: _pages[_currentIndex],
       bottomNavigationBar: SalomonBottomBar(
         backgroundColor: Colors.pinkAccent.shade100,
         currentIndex: _currentIndex,
