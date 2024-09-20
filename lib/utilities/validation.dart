@@ -1,5 +1,5 @@
 String? nameValidation (String? val) {
-  RegExp nameRegex = RegExp( r'^[a-zA-Z]+(?:\s[a-zA-Z]+)+$');
+  RegExp nameRegex = RegExp(r'^[a-zA-Z]+(?:\s[a-zA-Z]+)+$');
   if (val!.isEmpty) {
     return "Please Enter Name";
   } else if (nameRegex.hasMatch(val) == false) {
@@ -7,6 +7,7 @@ String? nameValidation (String? val) {
   }
   return null;
 }
+
 // r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$'
 String? emailValidation (String? val) {
   RegExp emailRegex = RegExp(r'^[a-zA-Z0-9_-]{3,}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
@@ -29,7 +30,8 @@ String? numberValidation (String? val) {
 }
 
 String? passwordValidation (String? val) {
-  RegExp passwordRegex = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}$');
+  RegExp passwordRegex =
+  RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}$');
   if (val!.isEmpty) {
     return "Please Enter Password";
   } else if (passwordRegex.hasMatch(val) == false) {

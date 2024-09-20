@@ -19,7 +19,7 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  bool visibility = true;
+  bool invisibility = true;
 
   Future<void> login() async {
     AuthServices authService = AuthServices();
@@ -56,20 +56,23 @@ class _SignInPageState extends State<SignInPage> {
                 suffixIcon: IconButton(
                   onPressed: () {
                     setState(() {
-                      visibility = !visibility;
+                      invisibility = !invisibility;
                     });
                   },
-                  icon:
-                      visibility ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
+                  icon: invisibility
+                      ? const Icon(Icons.visibility)
+                      : const Icon(Icons.visibility_off),
                 ),
-                visible: visibility,
+                visible: invisibility,
               ),
               Align(
                 alignment: Alignment.centerRight,
                 child: textButton(
                   'Forget Password',
                   () {
-                    Get.to(() => const ResetPassword());
+                    Get.to(
+                      () => const ResetPassword(),
+                    );
                   },
                 ),
               ),
@@ -82,9 +85,12 @@ class _SignInPageState extends State<SignInPage> {
                 height: 20,
                 child: const Text("Create an account if you don't have"),
               ),
-              outlineButton("Sign Up", () {
-                Get.off(() => const SignUpPage());
-              }),
+              outlineButton(
+                "Sign Up",
+                () {
+                  Get.off(() => const SignUpPage());
+                },
+              ),
             ],
           ),
         ),

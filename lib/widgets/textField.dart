@@ -11,10 +11,9 @@ Widget customFormField(
       Widget suffixIcon = const SizedBox(width: 0),
     }) {
   return Padding(
-    padding: const EdgeInsets.all(8.0),
+    padding: const EdgeInsets.all(8),
     child: TextFormField(
       controller: controller,
-
       keyboardType: textInputType,
       obscureText: visible,
       decoration: InputDecoration(
@@ -28,3 +27,5 @@ Widget customFormField(
     ),
   );
 }
+
+

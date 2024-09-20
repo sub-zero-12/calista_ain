@@ -22,11 +22,13 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController number = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
-  bool visibility = true;
+  bool invisibility = true;
   final key = GlobalKey<FormState>();
+
 
   Future<void> signUp() async {
     AuthServices authServices = AuthServices();
+
     await authServices.signUp(email.text.trim(), password.text.trim());
   }
 
@@ -45,6 +47,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
+
           child: Form(
             key: key,
             child: Column(
@@ -57,24 +60,24 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: thumbnail(),
                 ),
                 customFormField(
-                  name,
-                  "Enter Name",
-                  Icons.person_outlined,
-                  TextInputType.text,
-                  nameValidation,
+                  name, // controller
+                  "Enter Name", // label
+                  Icons.person_outlined, // IconData
+                  TextInputType.text, // InputType
+                  nameValidation, // validator
                 ),
                 customFormField(
                   email,
                   "Enter Email",
                   Icons.email_outlined,
-                  TextInputType.text,
+                  TextInputType.emailAddress,
                   emailValidation,
                 ),
                 customFormField(
                   number,
                   "Enter Number",
                   Icons.phone_outlined,
-                  TextInputType.text,
+                  TextInputType.phone,
                   numberValidation,
                 ),
                 customFormField(
@@ -86,14 +89,15 @@ class _SignUpPageState extends State<SignUpPage> {
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
-                        visibility = !visibility;
+                        // visibility =
+                        invisibility = !invisibility;
                       });
                     },
-                    icon: visibility
+                    icon: invisibility
                         ? const Icon(Icons.visibility)
                         : const Icon(Icons.visibility_off),
                   ),
-                  visible: visibility,
+                  visible: invisibility,
                 ),
                 customFormField(
                   confirmPassword,
@@ -108,22 +112,21 @@ class _SignUpPageState extends State<SignUpPage> {
                     }
                     return null;
                   },
-                  visible: visibility,
+                  visible: invisibility,
                 ),
                 elevatedButton(
                   "Sign Up",
-                    (){
-                    print(key.currentState!.validate());
+                    () async {
+
                       if (key.currentState!.validate()) {
-                        print("ABC");
-                        signUp();
-                        addUserData();
+
+                        signUp(); ///authentication
+                        addUserData(); /// Cloud Firestore
                       }
                     }
                 ),
                 Container(
                   margin: const EdgeInsets.all(10),
-                  height: 20,
                   child: const Text("If you have account"),
                 ),
                 outlineButton(

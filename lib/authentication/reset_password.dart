@@ -17,8 +17,8 @@ class _ResetPasswordState extends State<ResetPassword> {
   TextEditingController email = TextEditingController();
 
   Future<void> resetPassword() async {
-       AuthServices authServices = AuthServices();
-       authServices.resetPassword(email.text.trim());
+    AuthServices authServices = AuthServices();
+    authServices.resetPassword(email.text.trim());
   }
 
   @override
@@ -32,14 +32,26 @@ class _ResetPasswordState extends State<ResetPassword> {
             children: [
               Text(
                 "Enter your email and click Send Link button. A password reset link will be sent "
-                    "to your email by which you can reset your password",
+                "to your email by which you can reset your password",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.alata(fontSize: 16),
               ),
-              customFormField(email, "Enter Email", Icons.email, TextInputType.text, (val) {}),
-              elevatedButton("Send Link", resetPassword),
+              customFormField(
+                email,
+                "Enter Email",
+                Icons.email,
+                TextInputType.text,
+                (val) {},
+              ),
+              elevatedButton(
+                "Send Link",
+                resetPassword,
+              ),
               const SizedBox(height: 10),
-              outlineButton("Go Back", () => Get.back()),
+              outlineButton(
+                "Go Back",
+                () => Get.back(),
+              ),
             ],
           ),
         ),

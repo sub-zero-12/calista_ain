@@ -34,7 +34,7 @@ class _ProfileState extends State<Profile> {
         child: Column(
           children: [
             const CircleAvatar(
-              child: Text('C'),
+              child: Text('CA'),
             ),
             Text("Name: ${userData['name']}"),
             Text(

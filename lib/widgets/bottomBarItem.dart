@@ -9,6 +9,6 @@ SalomonBottomBarItem salomonBottomBarItem(IconData iconData, String title) {
       title,
       style: GoogleFonts.alata(color: Colors.white),
     ),
-    selectedColor: Colors.black,
+    // selectedColor: Colors.black,
   );
 }

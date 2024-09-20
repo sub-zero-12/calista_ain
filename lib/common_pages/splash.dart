@@ -1,13 +1,11 @@
 import 'dart:async';
-
 import 'package:calista_ain/authentication/sign_in.dart';
 import 'package:calista_ain/user/admin/admin_home.dart';
-import 'package:calista_ain/widgets/thumbnail.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../user/customer/customer_home.dart';
+import '../widgets/thumbnail.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -17,19 +15,21 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  void selectRoute() async {
+
+
+  void selectRoute() {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user = auth.currentUser;
 
-    if (user != null) {
-      String admin = "calistaain@gmail.com";
+    if (user == null) {
+      Get.offAll(() => const SignInPage());
+    } else {
+      const String admin = "calistaain@gmail.com";
       if (user.email!.toLowerCase() == admin) {
         Get.offAll(() => const AdminHomePage());
       } else {
         Get.offAll(() => const CustomerHomePage());
       }
-    } else {
-      Get.offAll(() => const SignInPage());
     }
   }
 
@@ -38,7 +38,7 @@ class _SplashState extends State<Splash> {
     // TODO: implement initState
     Timer(
       const Duration(seconds: 3),
-      selectRoute
+      selectRoute,
     );
     super.initState();
   }
@@ -58,10 +58,12 @@ class _SplashState extends State<Splash> {
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
+
 }
+

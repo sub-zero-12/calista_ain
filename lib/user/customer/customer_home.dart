@@ -6,7 +6,6 @@ import 'package:calista_ain/user/customer/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-
 import '../../widgets/bottomBarItem.dart';
 
 class CustomerHomePage extends StatefulWidget {
@@ -34,7 +33,6 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
         backgroundColor: Colors.pinkAccent.shade100,
       ),
       endDrawer: const Drawer(
-
         child: Profile(),
       ),
       body: _pages[_currentIndex],
@@ -47,7 +45,6 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
           });
         },
         items: [
-          /// Home
           salomonBottomBarItem(Icons.home_outlined, "Home"),
           salomonBottomBarItem(Icons.shopping_cart_outlined, 'Cart'),
           salomonBottomBarItem(Icons.favorite_outline, "Wishlist"),

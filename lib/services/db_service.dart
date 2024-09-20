@@ -5,8 +5,9 @@ String user = "users";
 class DatabaseService{
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<void> addUserData(Map<String, String> userData) async{
+  Future<void> addUserData(Map<String, String> userData) async {
     await firestore.collection(user).doc(userData['email']).set(userData);
+    // await firestore.collection(user).doc(userData['email']).set(userData);
   }
 
   Future<Map<String, dynamic>?> getUserData() async{
@@ -16,3 +17,4 @@ class DatabaseService{
   }
 
 }
+
