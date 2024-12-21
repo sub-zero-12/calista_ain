@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.pinkAccent.shade100,
         ),
         // useMaterial3: true,
-        textTheme: GoogleFonts.adaminaTextTheme(),
+        textTheme: GoogleFonts.alataTextTheme(),
       ),
       home: const Splash(),
     );

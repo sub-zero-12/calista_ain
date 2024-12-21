@@ -1,12 +1,12 @@
 class ProductOrder {
-  final String id;
-  final String userId;
-  final List<OrderItem> items;
-  final double totalAmount;
-  final DateTime orderDate;
-  final String status;
-  final String? shippingAddress;
-  final String? transactionID;
+  String id;
+  String userId;
+  List<OrderItem> items;
+  double totalAmount;
+  DateTime orderDate;
+  String status;
+  String? shippingAddress;
+  String? transactionID;
 
   ProductOrder({
     required this.id,
@@ -54,6 +54,7 @@ class OrderItem {
   int quantity;
   double price;
   String thumbnail;
+  double discount;
 
   OrderItem({
     required this.productId,
@@ -61,6 +62,7 @@ class OrderItem {
     this.quantity = 0,
     required this.price,
     required this.thumbnail,
+    required this.discount,
   });
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
@@ -70,6 +72,7 @@ class OrderItem {
       quantity: json['quantity'],
       price: json['price'],
       thumbnail: json['thumbnail'],
+      discount: json['discount'],
     );
   }
 
@@ -80,14 +83,9 @@ class OrderItem {
       'quantity': quantity,
       'price': price,
       'thumbnail': thumbnail,
+      'discount': discount,
     };
   }
 }
 
-enum OrderStatus {
-  pending,
-  confirmed,
-  shipped,
-  delivered,
-  cancelled,
-}
+

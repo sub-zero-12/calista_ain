@@ -24,16 +24,19 @@ class _WishlistState extends State<Wishlist> {
           List<ProductModel> products =
               snapshot.data!.docs.map((doc) => ProductModel.fromJson(doc.data())).toList();
           List<ProductModel> wishlist = [];
-          for(ProductModel product in products){
-            if(product.favourite!.contains(userID)){
+          for (ProductModel product in products) {
+            if (product.favourite!.contains(userID)) {
               wishlist.add(product);
             }
           }
+          if (wishlist.isEmpty) {
+            return Center(
+              child: Image.asset("images/empty-wishlist.png"),
+            );
+          }
           return viewProducts(wishlist);
         } else {
-          return const Center(
-            child: Text("No Product Found"),
-          );
+          return const SizedBox();
         }
       },
     );

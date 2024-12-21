@@ -1,4 +1,5 @@
 import 'package:calista_ain/authentication/sign_in.dart';
+import 'package:calista_ain/model/user_model.dart';
 import 'package:calista_ain/services/auth_service.dart';
 import 'package:calista_ain/services/db_service.dart';
 import 'package:calista_ain/utilities/validation.dart';
@@ -25,7 +26,6 @@ class _SignUpPageState extends State<SignUpPage> {
   bool invisibility = true;
   final key = GlobalKey<FormState>();
 
-
   Future<void> signUp() async {
     AuthServices authServices = AuthServices();
 
@@ -34,12 +34,12 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Future<void> addUserData() async {
     DatabaseService databaseService = DatabaseService();
-    Map<String, String> userData = {
-      "name": name.text.trim(),
-      "email": email.text.trim(),
-      "number": number.text.trim(),
-    };
-    await databaseService.addUserData(userData);
+    UserModel userModel = UserModel(
+      name: name.text.trim(),
+      email: email.text.trim(),
+      number: number.text.trim(),
+    );
+    await databaseService.addUserData(userModel);
   }
 
   @override
@@ -47,7 +47,6 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-
           child: Form(
             key: key,
             child: Column(
@@ -64,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   "Enter Name", // label
                   Icons.person_outlined, // IconData
                   TextInputType.text,
-                  1,// InputType
+                  1, // InputType
                   nameValidation, // validator
                 ),
                 customFormField(
@@ -119,17 +118,16 @@ class _SignUpPageState extends State<SignUpPage> {
                   },
                   visible: invisibility,
                 ),
-                elevatedButton(
-                  "Sign Up",
-                    () async {
+                elevatedButton("Sign Up", () async {
+                  if (key.currentState!.validate()) {
+                    signUp();
 
-                      if (key.currentState!.validate()) {
+                    ///authentication
+                    addUserData();
 
-                        signUp(); ///authentication
-                        addUserData(); /// Cloud Firestore
-                      }
-                    }
-                ),
+                    /// Cloud Firestore
+                  }
+                }),
                 Container(
                   margin: const EdgeInsets.all(10),
                   child: const Text("If you have account"),

@@ -1,5 +1,7 @@
 import 'package:calista_ain/model/order_model.dart';
 import 'package:calista_ain/services/db_service.dart';
+import 'package:calista_ain/widgets/snackbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -12,19 +14,33 @@ class MyOrders extends StatefulWidget {
 }
 
 class _MyOrdersState extends State<MyOrders> {
+  DatabaseService databaseService = DatabaseService();
+  String userID = FirebaseAuth.instance.currentUser!.uid;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: DatabaseService().getCustomerOrder(),
+      stream: databaseService.getOrder(),
       builder: (context, snapshot) {
-        if (snapshot.hasData == false) return const SizedBox();
-        List<ProductOrder> orders =
-            snapshot.data!.docs.map((e) => ProductOrder.fromJson(e.data())).toList();
-        print(snapshot.data!.docs.first.data());
+        List<ProductOrder>? orders =
+            snapshot.data?.docs.map((e) => ProductOrder.fromJson(e.data())).toList();
+        if (snapshot.hasData == false || orders == null) {
+          return Center(
+            child: SizedBox(
+              height: Get.height,
+              child: Image.asset(
+                "images/no-orders.png",
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+          );
+        }
+
         return ListView.builder(
-          itemCount: orders.length,
+          itemCount: orders.length ?? 0,
           itemBuilder: (context, index) {
             ProductOrder order = orders[index];
+            if (order.userId != userID) return null;
             return Card(
               margin: const EdgeInsets.all(8),
               child: Padding(
@@ -38,6 +54,7 @@ class _MyOrdersState extends State<MyOrders> {
                     ExpansionTile(
                       title: Text("View ${order.items.length} Item(s)"),
                       children: order.items.map((item) {
+                        double discountPrice = item.price - item.price * item.discount ~/ 100;
                         return ListTile(
                           contentPadding: EdgeInsets.zero,
                           leading: ClipRRect(
@@ -48,9 +65,10 @@ class _MyOrdersState extends State<MyOrders> {
                             ),
                           ),
                           title: Text(item.name),
-                          subtitle: Text("Price: ৳ ${item.price}\nQuantity: ${item.quantity}"),
+                          subtitle: Text("Price: ৳ $discountPrice"
+                              "\nQuantity: ${item.quantity}"),
                           trailing: Text(
-                            "৳ ${item.price * item.quantity}",
+                            "৳ ${discountPrice * item.quantity}",
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         );
@@ -64,34 +82,82 @@ class _MyOrdersState extends State<MyOrders> {
                           "Total Amount: ৳ ${order.totalAmount}",
                           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        if (order.status.toLowerCase() == "pending")
-                          IconButton(
+                        if (order.status.toLowerCase() == "delivered" ||
+                            order.status.toLowerCase() == "cancelled")
+                          TextButton(
                             onPressed: () {
-                              Get.defaultDialog(title: "Tap yes to delete the order", actions: [
-                                TextButton(onPressed: () {}, child: const Text("Yes")),
-                                TextButton(onPressed: () {}, child: const Text("No")),
-                              ]);
-                            },
-                            icon: const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                            ),
-                          ),
-                        if (order.status.toLowerCase() == "pending")
-                          IconButton(
-                            onPressed: () {
-                              Get.defaultDialog(
-                                title: "Tap yes to cancel the order",
-                                actions: [
-                                  TextButton(onPressed: () {}, child: const Text("Yes")),
-                                  TextButton(onPressed: () {}, child: const Text("No")),
-                                ],
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text("Tap yes to delete order"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () async {
+                                            order.userId = "";
+                                            bool response =
+                                                await databaseService.placeOrder(order);
+                                            if (response) {
+                                              Get.showSnackbar(
+                                                  successSnackBar("Order deleted successfully"));
+                                            } else {
+                                              Get.showSnackbar(
+                                                failedSnackBar("Something went wrong. Try again!"),
+                                              );
+                                            }
+                                            Get.back();
+                                          },
+                                          child: const Text("Yes")),
+                                      TextButton(
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        child: const Text("No"),
+                                      ),
+                                    ],
+                                  );
+                                },
                               );
                             },
-                            icon: const Icon(
-                              Icons.cancel,
-                              color: Colors.red,
-                            ),
+                            child: const Text("Delete"),
+                          ),
+                        if (order.status.toLowerCase() == "pending")
+                          TextButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text("Tap yes to cancel order"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () async {
+                                          bool response =
+                                              await databaseService.deleteOrder(order.id);
+                                          if (response) {
+                                            Get.showSnackbar(
+                                                successSnackBar("Order cancelled successfully"));
+                                          } else {
+                                            Get.showSnackbar(
+                                              failedSnackBar("Something went wrong. Try again!"),
+                                            );
+                                          }
+                                          Get.back();
+                                        },
+                                        child: const Text("Yes"),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        child: const Text("No"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: const Text("Cancel"),
                           )
                       ],
                     ),

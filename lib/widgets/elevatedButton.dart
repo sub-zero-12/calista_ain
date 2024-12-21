@@ -12,9 +12,8 @@ Widget elevatedButton(String name, Function() onPressed, {double width=200}) {
       ),
       child: Text(
         name,
-        style: const TextStyle(color: Colors.white),
-        // style: GoogleFonts.alata(
-        //   color: Colors.white,
+        style: const TextStyle(color: Colors.white, fontSize: 18),
+        // style: TextStyle(
         //   fontSize: 18,
         // ),
       ),

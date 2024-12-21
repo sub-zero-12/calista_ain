@@ -1,7 +1,7 @@
 import 'package:calista_ain/model/product_model.dart';
 import 'package:calista_ain/services/db_service.dart';
 import 'package:calista_ain/user/customer/checkout_view.dart';
-import 'package:calista_ain/widgets/outlineButton.dart';
+import 'package:calista_ain/widgets/elevatedButton.dart';
 import 'package:calista_ain/widgets/view_products.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,6 @@ class _CartState extends State<Cart> {
   DatabaseService databaseService = DatabaseService();
   String userID = FirebaseAuth.instance.currentUser!.uid;
 
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -33,14 +32,22 @@ class _CartState extends State<Cart> {
               cart.add(product);
             }
           }
+          if (cart.isEmpty) {
+            return Center(
+              child: Image.asset(
+                "images/empty-cart.png",
+                // fit: BoxFit.fitHeight,
+              ),
+            );
+          }
           return Column(
             children: [
               Expanded(child: viewProducts(cart)),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: outlineButton(
+                child: elevatedButton(
                   "Checkout",
-                      () => Get.to(
+                  () => Get.to(
                     const CheckoutView(),
                     arguments: cart,
                   ),

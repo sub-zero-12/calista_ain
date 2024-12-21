@@ -1,6 +1,8 @@
 import 'package:calista_ain/authentication/sign_in.dart';
+import 'package:calista_ain/model/user_model.dart';
 import 'package:calista_ain/services/auth_service.dart';
 import 'package:calista_ain/services/db_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -13,10 +15,10 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Map<String, dynamic> userData = {};
-
+  UserModel? userModel;
+  String userEmail = FirebaseAuth.instance.currentUser!.email!;
   getUserData() async {
-    userData = (await DatabaseService().getUserData())!;
+    userModel = (await DatabaseService().getUserData(userEmail));
     setState(() {});
   }
 
@@ -36,12 +38,12 @@ class _ProfileState extends State<Profile> {
             const CircleAvatar(
               child: Text('CA'),
             ),
-            Text("Name: ${userData['name']}"),
+            Text("Name: ${userModel?.name}"),
             Text(
-              "Email: ${userData['email']}",
+              "Email: ${userModel?.email}",
               overflow: TextOverflow.ellipsis,
             ),
-            Text("Mobile: ${userData['number']}"),
+            Text("Mobile: ${userModel?.number}"),
             ElevatedButton(
               onPressed: () async {
                 await AuthServices().logout();

@@ -12,7 +12,7 @@ Widget viewProducts(List<ProductModel> products) {
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
     itemBuilder: (context, index) {
       ProductModel product = products[index];
-      double discountPercent = (100 - product.discount!) / 100;
+      double discountPrice = product.price! - (product.price! * product.discount!/100).toInt();
       return InkWell(
         onTap: () {
           if (currentUser!.email == "calistaain@gmail.com") {
@@ -59,7 +59,7 @@ Widget viewProducts(List<ProductModel> products) {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        "৳ ${(product.price! * discountPercent).floorToDouble()} Only",
+                        "৳ $discountPrice Only",
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],

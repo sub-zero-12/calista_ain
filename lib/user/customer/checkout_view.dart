@@ -2,8 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:calista_ain/model/order_model.dart';
 import 'package:calista_ain/model/product_model.dart';
 import 'package:calista_ain/services/db_service.dart';
-import 'package:calista_ain/user/customer/customer_home.dart';
-import 'package:calista_ain/user/customer/my_orders.dart';
 import 'package:calista_ain/utilities/validation.dart';
 import 'package:calista_ain/widgets/snackbar.dart';
 import 'package:calista_ain/widgets/textField.dart';
@@ -15,7 +13,6 @@ import 'package:uuid/uuid.dart';
 
 class CheckoutView extends StatefulWidget {
   const CheckoutView({Key? key}) : super(key: key);
-
   @override
   State<CheckoutView> createState() => _CheckoutViewState();
 }
@@ -25,9 +22,8 @@ class _CheckoutViewState extends State<CheckoutView> {
   TextEditingController shippingAddressController = TextEditingController();
   TextEditingController transactionIdController = TextEditingController();
 
-  bool CoD = false;
+  bool delivery = false;
   bool pickUp = false;
-  bool isLoading = false;
 
   double totalAmount = 0;
   List<ProductModel> cart = Get.arguments;
@@ -45,6 +41,7 @@ class _CheckoutViewState extends State<CheckoutView> {
             quantity: 0,
             price: cartItem.price ?? 0,
             thumbnail: cartItem.images!.first,
+            discount: cartItem.discount ?? 0,
           ),
         )
         .toList();
@@ -52,23 +49,18 @@ class _CheckoutViewState extends State<CheckoutView> {
   }
 
   placeOrder() async {
-    setState(() {
-      isLoading = true;
-    });
+
     ProductOrder order = ProductOrder(
       id: const Uuid().v4(),
-      userId: FirebaseAuth.instance.currentUser!.uid,
+      userId: FirebaseAuth.instance.currentUser!.email!,
       items: orderItems,
       totalAmount: totalAmount,
       orderDate: DateTime.now(),
       status: "Pending",
       shippingAddress: pickUp ? "Pick Up from Spot" : shippingAddressController.text.trim(),
-      transactionID: CoD ? "Cash on Delivery" : transactionIdController.text.trim(),
+      transactionID: delivery ? "Cash on Delivery" : transactionIdController.text.trim(),
     );
     bool response = await databaseService.placeOrder(order);
-    setState(() {
-      isLoading = false;
-    });
     if (response) {
       Get.showSnackbar(successSnackBar("Order is placed successfully"));
     } else {
@@ -84,9 +76,7 @@ class _CheckoutViewState extends State<CheckoutView> {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: isLoading
-            ? const CircularProgressIndicator()
-            : SingleChildScrollView(
+        child: SingleChildScrollView(
                 child: Column(
                   children: [
                     Row(
@@ -96,10 +86,10 @@ class _CheckoutViewState extends State<CheckoutView> {
                           child: CheckboxListTile(
                             title: const Text("Cash on Delivery"),
                             //subtitle: const Text("Inside Sylhet: 40 TK | Outside Sylhet: 120 TK"),
-                            value: CoD,
+                            value: delivery,
                             onChanged: (value) {
                               setState(() {
-                                CoD = !CoD;
+                                delivery = !delivery;
                               });
                             },
                           ),
@@ -132,7 +122,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               1,
                               textValidation,
                             ),
-                          if (!CoD)
+                          if (!delivery)
                             customFormField(
                               transactionIdController,
                               "Transaction ID",
@@ -192,10 +182,14 @@ class _CheckoutViewState extends State<CheckoutView> {
                           width: 120,
                           child: Row(
                             children: [
-                              const Text("Quantity "),
-                              const Spacer(),
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text("Quantity"),
+                              ),
+                              // const Spacer(),
                               InkWell(
                                 onTap: () {
+                                  itemPrice = itemPrice - (itemPrice*item.discount/100).toInt();
                                   if (item.quantity >= 1) {
                                     item.quantity -= 1;
                                     totalAmount -= itemPrice;
@@ -214,6 +208,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               ),
                               InkWell(
                                 onTap: () {
+                                  itemPrice = itemPrice - (itemPrice*item.discount/100).toInt();
                                   item.quantity += 1;
                                   totalAmount += itemPrice;
                                   setState(() {});
