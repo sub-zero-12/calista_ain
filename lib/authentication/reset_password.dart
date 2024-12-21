@@ -41,6 +41,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 "Enter Email",
                 Icons.email,
                 TextInputType.text,
+                1,
                 (val) {},
               ),
               elevatedButton(

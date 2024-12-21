@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Widget outlineButton(String name, Function() onPressed) {
+Widget outlineButton(String name, Function() onPressed, {double width=200}) {
   return SizedBox(
-    height: 50,
-    width: 200,
+    width: width,
     child: OutlinedButton(
       onPressed: onPressed,
       // style: ElevatedButton.styleFrom(
@@ -12,7 +11,7 @@ Widget outlineButton(String name, Function() onPressed) {
       // ),
       child: Text(
         name,
-        style: GoogleFonts.alata(
+        style: TextStyle(
           fontSize: 18,
         ),
       ),

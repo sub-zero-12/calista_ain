@@ -1,5 +1,5 @@
 String? nameValidation (String? val) {
-  RegExp nameRegex = RegExp(r'^[a-zA-Z]+(?:\s[a-zA-Z]+)+$');
+  RegExp nameRegex = RegExp(r'^[a-zA-Z.]+(?:\s[a-zA-Z.]+)+$');
   if (val!.isEmpty) {
     return "Please Enter Name";
   } else if (nameRegex.hasMatch(val) == false) {
@@ -36,6 +36,21 @@ String? passwordValidation (String? val) {
     return "Please Enter Password";
   } else if (passwordRegex.hasMatch(val) == false) {
     return "At least 1 uppercase, lowercase and number with length 6";
+  }
+  return null;
+}
+
+String? textValidation(String? value) {
+  if (value!.trim().isEmpty) return "Please fill the field.";
+  return null;
+}
+
+String? amountValidation(String? value){
+  RegExp numberRegex = RegExp(r'^[0-9.]+$');
+  if(value!.trim().isEmpty) {
+    return "Please fill the field";
+  } else if(numberRegex.hasMatch(value.trim()) == false) {
+    return "Only 0-9 and . is allowed";
   }
   return null;
 }

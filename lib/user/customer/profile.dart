@@ -65,10 +65,14 @@ class _ProfileState extends State<Profile> {
               label: const Text('WhatsApp'),
             ),
             OutlinedButton.icon(
-              onPressed: () {},
+              onPressed: () async {
+                String number = "+8801773639437";
+                final Uri url = Uri(scheme: 'tel', path: number);
+                await launchUrl(url);
+              },
               style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 40)),
               icon: const Icon(Icons.phone),
-              label: const Text('Call Us'),
+              label: const Text('Mobile'),
             ),
             const Text("Follow Us"),
             OutlinedButton.icon(

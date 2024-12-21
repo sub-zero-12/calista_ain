@@ -45,6 +45,7 @@ class _SignInPageState extends State<SignInPage> {
                 "Enter Email",
                 Icons.email_outlined,
                 TextInputType.text,
+                1,
                 (value) {},
               ),
               customFormField(
@@ -52,6 +53,7 @@ class _SignInPageState extends State<SignInPage> {
                 "Enter Password",
                 Icons.lock_outline,
                 TextInputType.text,
+                1,
                 (value) {},
                 suffixIcon: IconButton(
                   onPressed: () {

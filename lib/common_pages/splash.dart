@@ -22,7 +22,7 @@ class _SplashState extends State<Splash> {
     User? user = auth.currentUser;
 
     if (user == null) {
-      Get.offAll(() => const SignInPage());
+      Get.to(() => const SignInPage());
     } else {
       const String admin = "calistaain@gmail.com";
       if (user.email!.toLowerCase() == admin) {

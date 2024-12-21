@@ -5,10 +5,11 @@ Widget customFormField(
     String labelText,
     IconData iconData,
     TextInputType textInputType,
+    int? maxLine,
     validator, {
       bool readOnly = false,
       bool visible = false,
-      Widget suffixIcon = const SizedBox(width: 0),
+      Widget suffixIcon = const SizedBox.shrink(),
     }) {
   return Padding(
     padding: const EdgeInsets.all(8),
@@ -24,6 +25,7 @@ Widget customFormField(
       ),
       readOnly: readOnly,
       validator: validator,
+      maxLines: maxLine,
     ),
   );
 }

@@ -1,3 +1,4 @@
+import 'package:calista_ain/services/db_service.dart';
 import 'package:calista_ain/widgets/view_orders.dart';
 import 'package:flutter/material.dart';
 class AllOrders extends StatefulWidget {
@@ -8,6 +9,7 @@ class AllOrders extends StatefulWidget {
 }
 
 class _AllOrdersState extends State<AllOrders> {
+  DatabaseService databaseService = DatabaseService();
   @override
   Widget build(BuildContext context) {
     return viewOrders();

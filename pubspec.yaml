@@ -42,7 +42,14 @@ dependencies:
   firebase_core:
   cloud_firestore:
   firebase_auth:
+  firebase_storage:
   url_launcher:
+  file_picker:
+  uuid:
+  cached_network_image:
+  uri_to_file: ^1.0.0
+  five_pointed_star: ^1.0.3
+  intl:
 
 dev_dependencies:
   flutter_test:

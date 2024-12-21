@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Widget elevatedButton(String name, Function() onPressed) {
+Widget elevatedButton(String name, Function() onPressed, {double width=200}) {
   return SizedBox(
-    height: 50,
-    width: 200,
+    // height: 50,
+    width: width,
     child: ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
@@ -12,10 +12,11 @@ Widget elevatedButton(String name, Function() onPressed) {
       ),
       child: Text(
         name,
-        style: GoogleFonts.alata(
-          color: Colors.white,
-          fontSize: 18,
-        ),
+        style: const TextStyle(color: Colors.white),
+        // style: GoogleFonts.alata(
+        //   color: Colors.white,
+        //   fontSize: 18,
+        // ),
       ),
     ),
   );

@@ -5,7 +5,6 @@ import 'package:calista_ain/user/admin/all_orders.dart';
 import 'package:calista_ain/user/admin/all_products.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../../widgets/bottomBarItem.dart';
@@ -27,7 +26,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
       appBar: AppBar(
         title: const Text("Calista Ain"),
         centerTitle: true,
-        titleTextStyle: GoogleFonts.alata(
+        titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
           color: Colors.white,
           fontSize: 22,
           fontWeight: FontWeight.bold,
@@ -54,9 +53,9 @@ class _AdminHomePageState extends State<AdminHomePage> {
         },
         items: [
           /// Home
-          salomonBottomBarItem(Icons.home_outlined, "Home"),
-          salomonBottomBarItem(Icons.add_circle_outline, "Add Product"),
-          salomonBottomBarItem(Icons.list_alt_outlined, "All Orders"),
+          salomonBottomBarItem(context, Icons.home_outlined, "Home"),
+          salomonBottomBarItem(context, Icons.add_circle_outline, "Add Product"),
+          salomonBottomBarItem(context, Icons.list_alt_outlined, "All Orders"),
         ],
       ),
     );

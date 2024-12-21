@@ -7,7 +7,7 @@ GetSnackBar successSnackBar(String message) {
     message: message,
     backgroundColor: Colors.green,
     duration: const Duration(seconds: 3),
-    snackPosition: SnackPosition.TOP,
+    snackPosition: SnackPosition.BOTTOM,
   );
 }
 
@@ -16,6 +16,6 @@ GetSnackBar failedSnackBar(String message) {
     message: message,
     backgroundColor: Colors.red,
     duration: const Duration(seconds: 3),
-    snackPosition: SnackPosition.TOP,
+    snackPosition: SnackPosition.BOTTOM,
   );
 }

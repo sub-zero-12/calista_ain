@@ -63,7 +63,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   name, // controller
                   "Enter Name", // label
                   Icons.person_outlined, // IconData
-                  TextInputType.text, // InputType
+                  TextInputType.text,
+                  1,// InputType
                   nameValidation, // validator
                 ),
                 customFormField(
@@ -71,6 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   "Enter Email",
                   Icons.email_outlined,
                   TextInputType.emailAddress,
+                  1,
                   emailValidation,
                 ),
                 customFormField(
@@ -78,6 +80,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   "Enter Number",
                   Icons.phone_outlined,
                   TextInputType.phone,
+                  1,
                   numberValidation,
                 ),
                 customFormField(
@@ -85,6 +88,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   "Enter Password",
                   Icons.lock_outline,
                   TextInputType.text,
+                  1,
                   passwordValidation,
                   suffixIcon: IconButton(
                     onPressed: () {
@@ -104,6 +108,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   "Re-enter Password",
                   Icons.lock_outline,
                   TextInputType.text,
+                  1,
                   (value) {
                     if (confirmPassword.text.trim().isEmpty) {
                       return "Please Re-enter password";
