@@ -15,7 +15,7 @@ class MyOrders extends StatefulWidget {
 
 class _MyOrdersState extends State<MyOrders> {
   DatabaseService databaseService = DatabaseService();
-  String userID = FirebaseAuth.instance.currentUser!.uid;
+  String userID = FirebaseAuth.instance.currentUser!.email!;
 
   @override
   Widget build(BuildContext context) {
