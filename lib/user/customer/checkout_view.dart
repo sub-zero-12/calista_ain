@@ -189,7 +189,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               // const Spacer(),
                               InkWell(
                                 onTap: () {
-                                  itemPrice = itemPrice - (itemPrice*item.discount/100).toInt();
+                                  itemPrice = itemPrice - itemPrice*item.discount~/100;
                                   if (item.quantity >= 1) {
                                     item.quantity -= 1;
                                     totalAmount -= itemPrice;
@@ -208,7 +208,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  itemPrice = itemPrice - (itemPrice*item.discount/100).toInt();
+                                  itemPrice = itemPrice - itemPrice*item.discount~/100;
                                   item.quantity += 1;
                                   totalAmount += itemPrice;
                                   setState(() {});
