@@ -40,8 +40,11 @@ class _MyOrdersState extends State<MyOrders> {
           itemCount: orders.length ?? 0,
           itemBuilder: (context, index) {
             ProductOrder order = orders[index];
-            if (order.userId != userID) return null;
-            return Card(
+
+            if (order.userId.toLowerCase() == userID.toLowerCase()) {
+              print("Check: ${orders.length} ${order.userId} - ${userID}");
+
+              return Card(
               margin: const EdgeInsets.all(8),
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -100,12 +103,13 @@ class _MyOrdersState extends State<MyOrders> {
                                             if (response) {
                                               Get.showSnackbar(
                                                   successSnackBar("Order deleted successfully"));
+                                              Get.back();
                                             } else {
                                               Get.showSnackbar(
                                                 failedSnackBar("Something went wrong. Try again!"),
                                               );
                                             }
-                                            Get.back();
+                                            () => Get.back();
                                           },
                                           child: const Text("Yes")),
                                       TextButton(
@@ -137,6 +141,7 @@ class _MyOrdersState extends State<MyOrders> {
                                           if (response) {
                                             Get.showSnackbar(
                                                 successSnackBar("Order cancelled successfully"));
+                                            Get.back();
                                           } else {
                                             Get.showSnackbar(
                                               failedSnackBar("Something went wrong. Try again!"),
@@ -165,6 +170,9 @@ class _MyOrdersState extends State<MyOrders> {
                 ),
               ),
             );
+            } else{
+              return const SizedBox.shrink();
+            }
           },
         );
       },

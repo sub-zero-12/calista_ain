@@ -53,7 +53,7 @@ class _ViewOrderState extends State<ViewOrder> {
                     Text("Delivery Address: ${order.shippingAddress}"),
                     Text("Transaction ID: ${order.transactionID}"),
                     Text("Order Status: ${order.status.capitalizeFirst}"),
-                    Text("Sub-total: ${DateFormat().format(order.orderDate)}"),
+                    Text("Order Date: ${DateFormat().format(order.orderDate)}"),
                     Text("Sub-total: ${order.totalAmount}"),
                     Row(
                       children: [

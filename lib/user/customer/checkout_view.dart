@@ -146,11 +146,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               child: const Text("Place Order"),
                               onTap: () {
                                 if (formKey.currentState!.validate() && totalAmount > 0) {
-                                  for(OrderItem order in orderItems){
-                                    if(order.quantity == 0){
-                                      orderItems.remove(order);
-                                    }
-                                  }
+                                  orderItems.removeWhere((element) => element.quantity == 0);
                                   placeOrder();
                                   Get.back();
                                 } else {
