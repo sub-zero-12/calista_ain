@@ -5,14 +5,16 @@ import 'package:calista_ain/user/customer/product_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 Widget viewProducts(List<ProductModel> products) {
   User? currentUser = FirebaseAuth.instance.currentUser;
   return GridView.builder(
     itemCount: products.length,
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
     itemBuilder: (context, index) {
+      print("Product Name: ${products[index].discount}");
       ProductModel product = products[index];
-      double discountPrice = product.price! - (product.price! * product.discount!/100).toInt();
+      double discountPrice = product.price! - (product.price! * product.discount! / 100).toInt();
       return InkWell(
         onTap: () {
           if (currentUser!.email == "calistaain@gmail.com") {
@@ -53,17 +55,20 @@ Widget viewProducts(List<ProductModel> products) {
                       Text(
                         "৳ ${product.price}",
                         style: const TextStyle(
-                            decoration: TextDecoration.lineThrough,
-                            decorationColor: Colors.pink,
-                            color: Colors.pink),
+                          decoration: TextDecoration.lineThrough,
+                          decorationColor: Colors.pink,
+                          color: Colors.pink,
+                        ),
                         overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
                       Text(
-                        "৳ $discountPrice Only",
+                        " ৳ $discountPrice Only",
                         overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
                     ],
-                  )
+                  ),
               ],
             ),
           ),

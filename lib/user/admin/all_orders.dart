@@ -20,8 +20,11 @@ class _AllOrdersState extends State<AllOrders> {
     return StreamBuilder(
       stream: databaseService.getOrder(),
       builder: (context, snapshot) {
-        List<ProductOrder>? orders =
-            snapshot.data?.docs.map((e) => ProductOrder.fromJson(e.data())).toList();
+        List<ProductOrder>? orders = snapshot.data?.docs
+            .map((e) => ProductOrder.fromJson(
+                  e.data(),
+                ))
+            .toList();
         if (snapshot.hasData == false || orders == null) {
           return Center(
             child: SizedBox(

@@ -49,7 +49,6 @@ class _CheckoutViewState extends State<CheckoutView> {
   }
 
   placeOrder() async {
-
     ProductOrder order = ProductOrder(
       id: const Uuid().v4(),
       userId: FirebaseAuth.instance.currentUser!.email!,
@@ -75,151 +74,153 @@ class _CheckoutViewState extends State<CheckoutView> {
         title: const Text("Checkout Page"),
         centerTitle: true,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
+      body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                        flex: 6,
+                        child: CheckboxListTile(
+                          title: const Text("Cash on Delivery"),
+                          //subtitle: const Text("Inside Sylhet: 40 TK | Outside Sylhet: 120 TK"),
+                          value: delivery,
+                          onChanged: (value) {
+                            setState(() {
+                              delivery = !delivery;
+                            });
+                          },
+                        ),
+                      ),
+                      Flexible(
+                        flex: 4,
+                        child: CheckboxListTile(
+                          title: const Text("Pick Up"),
+                          value: pickUp,
+                          onChanged: (value) {
+                            setState(() {
+                              pickUp = !pickUp;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  Form(
+                    key: formKey,
+                    child: Column(
                       children: [
-                        Flexible(
-                          flex: 6,
-                          child: CheckboxListTile(
-                            title: const Text("Cash on Delivery"),
-                            //subtitle: const Text("Inside Sylhet: 40 TK | Outside Sylhet: 120 TK"),
-                            value: delivery,
-                            onChanged: (value) {
-                              setState(() {
-                                delivery = !delivery;
-                              });
-                            },
+                        if (pickUp == false)
+                          customFormField(
+                            shippingAddressController,
+                            "Shipping Address",
+                            CupertinoIcons.location,
+                            TextInputType.text,
+                            1,
+                            textValidation,
                           ),
-                        ),
-                        Flexible(
-                          flex: 4,
-                          child: CheckboxListTile(
-                            title: const Text("Pick Up"),
-                            // subtitle: const Text("Inside Sylhet: 40 TK | Outside Sylhet: 120 TK"),
-                            value: pickUp,
-                            onChanged: (value) {
-                              setState(() {
-                                pickUp = !pickUp;
-                              });
-                            },
+                        if (delivery == false)
+                          customFormField(
+                            transactionIdController,
+                            "Transaction ID",
+                            Icons.payment,
+                            TextInputType.text,
+                            1,
+                            textValidation,
                           ),
-                        ),
                       ],
                     ),
-                    Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          if (!pickUp)
-                            customFormField(
-                              shippingAddressController,
-                              "Shipping Address",
-                              CupertinoIcons.location,
-                              TextInputType.text,
-                              1,
-                              textValidation,
-                            ),
-                          if (!delivery)
-                            customFormField(
-                              transactionIdController,
-                              "Transaction ID",
-                              CupertinoIcons.money_dollar,
-                              TextInputType.text,
-                              1,
-                              textValidation,
-                            ),
-                        ],
-                      ),
-                    ),
+                  ),
 
-                    CircleAvatar(
-                      radius: 70,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Total"),
-                          Text("${totalAmount.toPrecision(2)}"),
-                          InkWell(
-                              child: const Text("Place Order"),
-                              onTap: () {
-                                if (formKey.currentState!.validate() && totalAmount > 0) {
-                                  orderItems.removeWhere((element) => element.quantity == 0);
-                                  placeOrder();
-                                  Get.back();
-                                } else {
-                                  Get.showSnackbar(failedSnackBar(
-                                      "Provide necessary info or add item to place order"));
-                                }
-                              })
-                        ],
-                      ),
+                  CircleAvatar(
+                    radius: 70,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Total"),
+                        Text("${totalAmount.toPrecision(2)}"),
+                        InkWell(
+                            child: const Text("Place Order"),
+                            onTap: () {
+                              if (formKey.currentState!.validate() && totalAmount > 0) {
+                                orderItems.removeWhere((element) => element.quantity == 0);
+                                placeOrder();
+                                Get.back();
+                              } else {
+                                Get.showSnackbar(failedSnackBar(
+                                    "Provide necessary info or add item to place order"));
+                              }
+                            })
+                      ],
                     ),
-                    // const Text("BKash Number: 01912345678"),
+                  ),
+                  // const Text("BKash Number: 01912345678"),
 
-                    ...orderItems.map((item) {
-                      double itemPrice = item.price;
-                      // (1 - ((cart[index].discount! / 100)).toPrecision(2));
-                      return ListTile(
-                        leading: ClipRRect(
+                  ...orderItems.map((item) {
+                    double itemPrice = item.price;
+                    // (1 - ((cart[index].discount! / 100)).toPrecision(2));
+                    return ListTile(
+                      leading: SizedBox(
+                        height: 60,
+                        width: 60,
+                        child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: CachedNetworkImage(
                             imageUrl: item.thumbnail,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        title: Text(
-                          item.name,
-                          overflow: TextOverflow.ellipsis,
+                      ),
+                      title: Text(
+                        item.name,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      // subtitle: Text("$itemPrice"),
+                      subtitle: SizedBox(
+                        width: 120,
+                        child: Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text("Quantity"),
+                            ),
+                            // const Spacer(),
+                            InkWell(
+                              onTap: () {
+                                itemPrice = itemPrice - itemPrice*item.discount~/100;
+                                if (item.quantity >= 1) {
+                                  item.quantity -= 1;
+                                  totalAmount -= itemPrice;
+                                }
+                                setState(() {});
+                              },
+                              child: const Icon(Icons.remove),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "${item.quantity}",
+                                style: TextStyle(
+                                    fontSize: Theme.of(context).textTheme.titleMedium?.fontSize),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                itemPrice = itemPrice - itemPrice*item.discount~/100;
+                                item.quantity += 1;
+                                totalAmount += itemPrice;
+                                setState(() {});
+                              },
+                              child: const Icon(Icons.add),
+                            ),
+                          ],
                         ),
-                        // subtitle: Text("$itemPrice"),
-                        subtitle: SizedBox(
-                          width: 120,
-                          child: Row(
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text("Quantity"),
-                              ),
-                              // const Spacer(),
-                              InkWell(
-                                onTap: () {
-                                  itemPrice = itemPrice - itemPrice*item.discount~/100;
-                                  if (item.quantity >= 1) {
-                                    item.quantity -= 1;
-                                    totalAmount -= itemPrice;
-                                  }
-                                  setState(() {});
-                                },
-                                child: const Icon(Icons.remove),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "${item.quantity}",
-                                  style: TextStyle(
-                                      fontSize: Theme.of(context).textTheme.titleMedium?.fontSize),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  itemPrice = itemPrice - itemPrice*item.discount~/100;
-                                  item.quantity += 1;
-                                  totalAmount += itemPrice;
-                                  setState(() {});
-                                },
-                                child: const Icon(Icons.add),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    })
-                  ],
-                ),
+                      ),
+                    );
+                  })
+                ],
               ),
-      ),
+            ),
     );
   }
 }

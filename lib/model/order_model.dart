@@ -19,7 +19,6 @@ class ProductOrder {
     this.transactionID,
   });
 
-  // Factory method to create an Order from JSON
   factory ProductOrder.fromJson(Map<String, dynamic> json) {
     return ProductOrder(
       id: json['id'],
@@ -33,7 +32,6 @@ class ProductOrder {
     );
   }
 
-  // Convert the Order object to JSON
   Map<String, dynamic> toJson() {
     return {
       'id': id,

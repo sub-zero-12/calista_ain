@@ -120,12 +120,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 elevatedButton("Sign Up", () async {
                   if (key.currentState!.validate()) {
-                    signUp();
-
-                    ///authentication
-                    addUserData();
-
-                    /// Cloud Firestore
+                    signUp();///authentication
+                    addUserData();/// Cloud Firestore
                   }
                 }),
                 Container(

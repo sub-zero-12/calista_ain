@@ -17,6 +17,7 @@ class _ProductsState extends State<Products> {
   List<String> categoryList = [];
 
   List<ProductModel> filter(List<ProductModel> products) {
+    print("Selected Category: $selectedCategory");
     if (selectedCategory == "") {
       return products;
     }
@@ -57,11 +58,11 @@ class _ProductsState extends State<Products> {
                   itemCount: categoryList.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8.0),
                       child: OutlinedButton(
                         onPressed: () {
-                          String oldValue = selectedCategory;
-                          selectedCategory = categoryList[index];
+                          String oldValue = selectedCategory; // "bag"
+                          selectedCategory = categoryList[index]; // bag
                           if (selectedCategory == oldValue) selectedCategory = "";
                           setState(() {});
                         },

@@ -110,8 +110,8 @@ class _UpdateProductState extends State<UpdateProduct> {
               onPressed: () async {
                 bool response = await databaseService.deleteProduct(productModel?.id ?? "");
                 if (response == true) {
-                  Get.showSnackbar(successSnackBar("Product Deleted Successfully"));
                   Get.back();
+                  Get.showSnackbar(successSnackBar("Product Deleted Successfully"));
                   Get.off(() => const AdminHomePage());
                 } else {
                   Get.showSnackbar(failedSnackBar("Something went wrong. Try again!"));

@@ -39,7 +39,7 @@ class _ViewOrderState extends State<ViewOrder> {
               child: Center(
                 child: Column(
                   // mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Divider(),
                     const Text("User Details"),
@@ -100,7 +100,7 @@ class _ViewOrderState extends State<ViewOrder> {
                               if (response) {
                                 Get.showSnackbar(successSnackBar("Order Status Updated"));
                               } else {
-                                Get.showSnackbar(failedSnackBar("Order Status Update"));
+                                Get.showSnackbar(failedSnackBar("Something Went Wrong"));
                               }
                               setState(() {});
                             },

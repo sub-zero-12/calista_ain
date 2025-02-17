@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:calista_ain/model/product_model.dart';
 import 'package:calista_ain/services/db_service.dart';
 import 'package:calista_ain/services/storage_service.dart';
@@ -29,10 +28,12 @@ class _AddProductState extends State<AddProduct> {
   List<File>? images;
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
+
   void addProduct() async {
     setState(() {
       isLoading = true;
     });
+
     StorageService storageService = StorageService();
     DatabaseService databaseService = DatabaseService();
     String id = const Uuid().v4();

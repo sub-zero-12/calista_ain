@@ -21,8 +21,6 @@ class DatabaseService {
     return UserModel.fromJson(userData.data() ?? {});
   }
 
-
-
   Future<bool> addProduct(ProductModel productModel) async {
     try {
       await firestore.collection(products).doc(productModel.id).set(productModel.toJson());
@@ -66,5 +64,4 @@ class DatabaseService {
       return false;
     }
   }
-
 }

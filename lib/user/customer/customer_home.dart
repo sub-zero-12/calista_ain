@@ -5,7 +5,6 @@ import 'package:calista_ain/user/customer/profile.dart';
 import 'package:calista_ain/user/customer/wishlist.dart';
 import 'package:calista_ain/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import '../../widgets/bottomBarItem.dart';
 
